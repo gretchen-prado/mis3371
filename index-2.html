@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 
 <html>
     <head>
@@ -7,7 +7,7 @@
 Program name: index-2.html
 Author: Gretchen R Prado Gonzalez
 Date created: February 5
-Date last edited: March 7
+Date last edited: March 9
 Version: 2.0
 Description: A patient registration form in HTML.-->
 
@@ -20,7 +20,7 @@ Description: A patient registration form in HTML.-->
 
 <table width="100%">
     <tr>
-        <td><img src="pradologo.png" width="100"></td>
+        <td><img src="pradologo2.png" width="100"></td>
         <td>PRADO <br>Family Clinic</td>
            <td>Today is: <p id="datetoday"></p></td> 
         </td>
@@ -30,13 +30,15 @@ Description: A patient registration form in HTML.-->
 
         <h1>Patient <br>Registration Form</h1>
     <br><br>
-     <form action="submission.html">
+     <form id="myForm" action="submission.html">
         <label for="fname">First Name</label>
         <input type="text" 
             id="fname" 
             name="fname" 
             minlength="2" maxlength="30" size="15" 
-            placeholder=John required>
+            placeholder=John 
+            pattern="^[A-Za-z'-]"
+            required>
         &nbsp;&nbsp;&nbsp;
        
         <label for="minitial">MI</label>
@@ -51,6 +53,7 @@ Description: A patient registration form in HTML.-->
             id="lname" 
             name="lname" 
             minlength="2" maxlength="30" size="15" 
+            pattern="^[A-Za-z'-]"
             placeholder="Smith" required>
     <p>
         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -59,13 +62,15 @@ Description: A patient registration form in HTML.-->
         <input type="date" 
             id="dob" 
             name="dob" 
+            min="1905-12-31"
+            max="2025-03-09"
             required>
       
         &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       
         <label for="ssn">SSN</label>
-        <input type="text" 
+        <input type="password" 
             id="ssn" 
             name="ssn" 
             minlength="9" maxlength="11" size="12" 
@@ -169,11 +174,14 @@ Description: A patient registration form in HTML.-->
         title="Numbers only">
     </p>
     <p>
-        &nbsp; &nbsp;
-
+        &nbsp;
+        <span id="emailError" class="error-message"></span>
         <label for="emial">Email</label>
-        <input type="email" placeholder="john@gmail.com"
+        <input type="email" name="email" placeholder="john@gmail.com"
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        oninput="validateEmail()"
         required>
+        
        
         &nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -231,24 +239,41 @@ Description: A patient registration form in HTML.-->
             <input type="text" 
             id="username" 
             name="username"
-            maxlength="20"
+            maxlength="30"
+            minlength="5"
             placeholder="Ex: JohnSmith"
             title="Must be different from email"
-            required>
+            required
+            pattern="(^?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}">
 
 <p>
     <label for="pwd">Password</label>
             <input type="password" 
             id="pwd" 
-            name="pwd">
+            name="pwd"
+            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
+            title="At least 1 upper and lower case, 1 number & 1 special character"
+            required
+            oninput="validatePassword()">
+
 </p>
 
+<!--error messages for password-->
+<tr>
+<div id="error"> <!--w3schools-->
+    <p id="lower" class="invalid">You need a lowercase letter</p>
+    <p id="upper" class="invalid">You need an uppercase letter</p>
+    <p id="number" class="invalid">Add a number</b></p>
+    <p id="length" class="invalid">Must be 8 characters or more</p>
+  </div>
+</tr>
   <label for="psw-repeat">Confirm Password</label>
             <input type="password" 
             placeholder="Re-enter Password" 
             name="psw-repeat" 
             id="psw-repeat" 
             required>
+            <p id="message"></p>
 <br><br>
 <p>
   <label for="vol">How often do you go for a checkup in a year? (between 0 and 4+):</label>
@@ -289,21 +314,28 @@ Description: A patient registration form in HTML.-->
             value="other">
             <label for="other"> Other</label>
 
-        <p> <br>   <!-- Reset & Submit buttons -->
+        <p> <br>   <!-- Reset & Review buttons -->
             <pre>
-    <input type="reset" title="Clears all data" value="Restart Form">                 <form action="submitted.html"> <input type="submit" value="Submit Form"> </form>
+    <input type="reset" title="Clears all data" value="Restart Form">            <input type="button" value="Review Form" onclick="reviewForm()">
+    <!--<form action="submission.html"> <input type="button" value="Review Form"> </form>-->
             </pre>
+          
+
         </p>
      </form>
 <br>
+
+<div id="reviewArea"></div>
         
+<button type="submit" id="confirmSubmit" disabled>Confirm & Submit</button>
+
    <!-- Footer-->
      <footer>
         <table width="100%">
         <tr>
             <td>Visit Us</td>
             <td><a href="https://www.w3schools.com">Contact Us</a></td>
-            <td><img src="pradologo.png" width="50"></td>
+            <td><img src="pradologo2.png" width="50"></td>
         </tr>
         <tr>
             <td>Houston, Texas</td>

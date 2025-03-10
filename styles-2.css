@@ -2,7 +2,7 @@
 Program name: index-2.html this is styles-2.css
 Author: Gretchen R Prado Gonzalez
 Date created: February 5
-Date last edited: March 7
+Date last edited: March 9
 Version: 2.0
 Description: CSS of the patient registration form.*/
 
@@ -36,5 +36,19 @@ Description: CSS of the patient registration form.*/
     footer {
         color:rgb(255, 255, 234) 
     }
-        
-      
+    #valid:before
+    {
+        text-align: right;
+        color: green
+    }
+    #invalid:before {
+        text-align: right;
+    }   
+    #error {
+        text-align: right;
+        font-size: 10px;
+    }
+    .error-message {
+        color: red;
+        font-size: 0.9em;
+        display: block;}
